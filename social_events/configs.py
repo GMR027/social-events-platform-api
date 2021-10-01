@@ -15,7 +15,7 @@ environment=environ.Env(
     EMAIL_HOST_PASSWORD=(str, 'password')
 )
 
-SERVER_APP_FOLDER_NAME='BACK'
+SERVER_APP_FOLDER_NAME='social-events-platform-api'
 
 environ.Env.read_env()
 
