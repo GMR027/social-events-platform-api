@@ -43,6 +43,11 @@ class EventAgenda(MediumPicture):
         blank=False,
         verbose_name="Inicio de exposicion"
     )
+    location=models.CharField (
+        max_length=32,
+        null=False,
+        blank=False
+    )
     map=ResizedImageField(
         verbose_name="Mapa",
         null=True,

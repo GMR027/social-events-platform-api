@@ -31,13 +31,15 @@ class EventAdmin(admin.ModelAdmin):
         "slug",
         "title",
         "classification",
-        "private"
+        "private",
+        "city"
     ]
     search_fields=("slug", "title", "short_description", "description")
     list_filter=(
         "enabled",
         "classification",
-        "private"
+        "private",
+        "city"
     )
     readonly_fields=(
         "href",
@@ -84,10 +86,11 @@ class EventAgendaAdmin(admin.ModelAdmin):
         "expositor",
         "date",
         "starting_time",
-        "ending_time"
+        "ending_time",
+        "location"
     ]
     search_fields=("title", "description")
-    list_filter=("enabled", "event", "date")
+    list_filter=("enabled", "event", "date", "location")
     readonly_fields=(
         "href",
         "version"
@@ -103,11 +106,10 @@ class EventUserRegistrationAdmin(admin.ModelAdmin):
         "event",
         "identifier",
         "check_in_complete",
-        "city",
         "phone"
     ]
     search_fields=("first_name", "last_name", "identifier", "email", "phone")
-    list_filter=("event", "zone", "city", "check_in_complete")
+    list_filter=("event", "zone", "check_in_complete")
     readonly_fields=(
         "version",
         "identifier",
