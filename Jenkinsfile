@@ -4,8 +4,8 @@ pipeline {
         skipStagesAfterUnstable()
     }
     environment {
-        DJANGO_APP_NAME = "nedii_app"
-        APP_FOLDER = "BACK"
+        DJANGO_APP_NAME = "social_events"
+        APP_FOLDER = "social-events-platform-api"
         ENV = sh(script: "echo ${ENV}", , returnStdout: true).trim()
     }
     stages {
