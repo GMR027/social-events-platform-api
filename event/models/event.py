@@ -64,6 +64,11 @@ class Event(MediumPicture):
         quality=90,
         upload_to=event_pictures
     )
+    city=models.CharField (
+        max_length=32,
+        null=False,
+        blank=False
+    )
     address=models.CharField(
         verbose_name="Dirección del evento",
         max_length=256,
