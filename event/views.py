@@ -32,7 +32,8 @@ class EventViewSet(ModelViewSet):
     filter_fields=(
         "enabled",
         "classification",
-        "private"
+        "private",
+        "slug"
     )
     search_fields=("slug", "title", "short_description", "description")
     ordering=( "id", )
