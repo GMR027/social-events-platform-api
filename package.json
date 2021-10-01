@@ -1,0 +1,27 @@
+{
+  "name": "nedii-api",
+  "version": "2.0.0",
+  "description": "Nedii API",
+  "main": "manage.py",
+  "scripts": {
+    "start": "python3 manage.py runserver 0.0.0.0:8000",
+    "static": "python3 manage.py collectstatic --noinput",
+    "user": "./utils/createsuperuser.sh",
+    "app": "./utils/createapp.sh",
+    "migrations": "python3 manage.py makemigrations",
+    "migrate": "python3 manage.py migrate",
+    "freeze": "python3 -m pip freeze -l > requirements.txt",
+    "setup-configurations": "./deploy/setup-configurations.sh",
+    "uninstall": "./deploy/uninstall.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://bitbucket.org:Yudhs/nedii-api.git"
+  },
+  "keywords": [
+    "Nedii"
+  ],
+  "author": "Christopher Irak Guzman Monsalvo",
+  "license": "Copyright",
+  "homepage": "https://bitbucket.org/Yudhs/nedii-api#readme"
+}
