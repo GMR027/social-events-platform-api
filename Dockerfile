@@ -1,0 +1,20 @@
+FROM python:3
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+ENV SECRET_KEY={SECRET_KEY} \
+    ENVT={ENVT} \
+    DB_NAME={DB_NAME} \
+    DB_USER={DB_USER} \
+    DB_PASSWORD={DB_PASSWORD} \
+    EMAIL_HOST_USER={EMAIL_HOST_USER} \
+    EMAIL_HOST_PASSWORD={EMAIL_HOST_PASSWORD}
+
+WORKDIR /app
+
+COPY . .
+
+RUN pip install -r requirements.txt
+
+CMD [ "/bin/sh", "docker-entrypoint.sh" ]

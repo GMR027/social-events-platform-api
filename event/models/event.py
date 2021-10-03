@@ -1,4 +1,4 @@
-from django.contrib.gis.db import models
+from django.db import models
 from common.models import MediumPicture
 from common.tools import set_media_url, get_unique_slug
 from django_resized import ResizedImageField
@@ -57,12 +57,15 @@ class Event(MediumPicture):
         blank=True,
         help_text="Descripción corta (90 carácteres)"
     )
-    responsive_letter=ResizedImageField (
-        null=True,
-        blank=True,
-        size=[1920, 1920],
-        quality=90,
-        upload_to=event_pictures
+    start_date=models.DateField(
+        null=False,
+        blank=False,
+        verbose_name="Fecha de inicio del evento"
+    )
+    end_date=models.DateField(
+        null=False,
+        blank=False,
+        verbose_name="Fecha de fin del evento"
     )
     city=models.CharField (
         max_length=32,
@@ -93,10 +96,17 @@ class Event(MediumPicture):
         verbose_name="Mapa",
         null=True,
         blank=True,
-        size=[512, 512],
+        size=[1920, 1080],
         quality=90,
         upload_to=event_pictures,
         help_text="Mapa del evento"
+    )
+    responsive_letter=ResizedImageField (
+        null=True,
+        blank=True,
+        size=[1920, 1920],
+        quality=90,
+        upload_to=event_pictures
     )
     video_live_link=models.URLField(
         verbose_name="Link del video en vivo",

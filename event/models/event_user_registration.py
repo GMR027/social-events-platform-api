@@ -1,4 +1,4 @@
-from django.contrib.gis.db import models
+from django.db import models
 from common.models import CommonFields
 from common.tools import set_media_url
 import uuid
@@ -54,14 +54,14 @@ class EventUserRegistration(CommonFields):
         null=True,
         blank=True
     )
-    covid_test_result=ResizedImageField (
+    img_covid_test_result=ResizedImageField (
         null=False,
         blank=False,
         size=[1920, 1920],
         quality=90,
         upload_to=picture
     )
-    responsive_letter=ResizedImageField (
+    img_signed_responsive_letter=ResizedImageField (
         null=False,
         blank=False,
         size=[1920, 1920],

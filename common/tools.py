@@ -56,21 +56,24 @@ def base64_to_file(picture, dir):
     ext = ext.split('/')[-1]
     picture = picture.split(';base64,')[1]
     picture_name = set_media_url(dir,'picture_profile.' + ext )
+    print('write', settings.MEDIA_ROOT + '/' + picture_name)
     with open(settings.MEDIA_ROOT + '/' + picture_name, "wb") as fh:
         fh.write(base64.decodebytes( bytes(picture,'utf8') ))
     return picture_name
 
 def save_base64_picture(request):
-    dir = 'common/'
+    dir = 'common'
     try:
-        dir = '{0}/'.format(json.loads(request.body.decode('utf-8'))['data']['type']) # Improve this for modles using common picture model
+        dir = '{0}'.format(json.loads(request.body.decode('utf-8'))['data']['type']).lower() # Improve this for modles using common picture model
         pass
     except:
         pass
+    print('>>>>> dir', dir)
     for i in request.data:
         if len(re.findall(r'img',i)) > 0:
-            picture = base64_to_file( request.data[i], dir )
+            picture = base64_to_file( request.data[i], 'events' ) # Fix!!!!
             path = os.path.join(settings.BASE_DIR, settings.MEDIA_ROOT + '/' + picture)
+            print('>>>>> path', path)
             picture = open(path, 'rb')
             request.data[i] = File(picture)
             os.remove(path)
