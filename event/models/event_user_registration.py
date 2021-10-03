@@ -54,6 +54,13 @@ class EventUserRegistration(CommonFields):
         null=True,
         blank=True
     )
+    img_user=ResizedImageField (
+        null=True,
+        blank=True,
+        size=[1080, 1080],
+        quality=90,
+        upload_to=picture
+    )
     img_covid_test_result=ResizedImageField (
         null=False,
         blank=False,

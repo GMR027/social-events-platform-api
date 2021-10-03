@@ -1,29 +1,29 @@
 version: "3.9"
 services:
-  db:
+  social-events-db:
     image: postgres:14.0-alpine
     volumes:
-      - /db-test:/var/lib/postgresql/data
+      - /social-events/${ENVT}/db:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
-      - POSTGRES_DB=social_events
-      - POSTGRES_USER=social_events
-      - POSTGRES_PASSWORD=social_events
-  web:
+      - POSTGRES_DB=${SOCIAL_EVENTS_POSTGRES_DB}
+      - POSTGRES_USER=${SOCIAL_EVENTS_POSTGRES_USER}
+      - POSTGRES_PASSWORD=${SOCIAL_EVENTS_POSTGRES_PASSWORD}
+  social-events-api:
     image: longmont.iguzman.com.mx:5000/social-events:1.0
     environment:
-      - SECRET_KEY=SECRET_KEY
-      - ENVT=staging
-      - DB_NAME=social_events
-      - DB_USER=social_events
-      - DB_PASSWORD=social_events
-      - EMAIL_HOST_USER=EMAIL_HOST_USER
-      - EMAIL_HOST_PASSWORD=EMAIL_HOST_PASSWORD
+      - SECRET_KEY=${SOCIAL_EVENTS_SECRET_KEY}
+      - ENVT=${ENVT}
+      - DB_NAME=${SOCIAL_EVENTS_POSTGRES_DB}
+      - DB_USER=${SOCIAL_EVENTS_POSTGRES_USER}
+      - DB_PASSWORD=${SOCIAL_EVENTS_POSTGRES_PASSWORD}
+      - EMAIL_HOST_USER=${SOCIAL_EVENTS_EMAIL_HOST_USER}
+      - EMAIL_HOST_PASSWORD=${SOCIAL_EVENTS_EMAIL_HOST_PASSWORD}
     volumes:
-      - /static-test:/static
-      - /media-test:/media
+      - /social-events/${ENVT}/static:/static
+      - /social-events/${ENVT}/media:/media
     ports:
-      - "8000:8000"
+      - "4030:8000"
     depends_on:
-      - db
+      - social-events-db
