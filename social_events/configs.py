@@ -7,7 +7,7 @@ BASE_DIR=Path(__file__).resolve().parent.parent
 
 environment=environ.Env(
     SECRET_KEY=(str, 'key'),
-    ENVIRONMENT=(str, 'localhost'),
+    ENVT=(str, 'localhost'),
     DB_NAME=(str, 'social_events'),
     DB_USER=(str, 'social_events'),
     DB_PASSWORD=(str, 'social_events'),
@@ -21,7 +21,7 @@ environ.Env.read_env()
 
 
 SECRET_KEY=environment('SECRET_KEY')
-ENVIRONMENT=environment('ENVIRONMENT')
+ENVT=environment('ENVT')
 DB_NAME=environment('DB_NAME')
 DB_USER=environment('DB_USER')
 DB_PASSWORD=environment('DB_PASSWORD')
@@ -47,14 +47,15 @@ class Common:
             'NAME': DB_NAME,
             'USER': DB_USER,
             'PASSWORD': DB_PASSWORD,
-            'HOST': '127.0.0.1',
+            'HOST': 'db',
             'PORT': '5432'
         }
     }
     EMAIL_HOST_USER=EMAIL_HOST_USER
     EMAIL_HOST_PASSWORD=EMAIL_HOST_PASSWORD
-    ENVIRONMENT=ENVIRONMENT
-
+    ENVT=ENVT
+    MEDIA_ROOT='/media'
+    STATIC_ROOT='/static'
 
 class LOCAL(Common):
     DATABASES = {
@@ -65,24 +66,23 @@ class LOCAL(Common):
     }
     WEB_APP_URL='http://127.0.0.1:3000/'
     MEDIA_ROOT=os.path.join(BASE_DIR, 'media')
+    STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 
 class STAGING(Common):
-    WEB_APP_URL='https://staging.social_events.com/'
-    MEDIA_ROOT='/var/www/static/staging/{}/media'.format(SERVER_APP_FOLDER_NAME)
+    WEB_APP_URL='https://staging.social-events.com/'
 
 
 class MASTER(Common):
     DEBUG=False
     JWT_ACCESS_EXPIRATION_MINUTES=15
     JWT_REFRESH_EXPIRATION_MINUTES=30
-    WEB_APP_URL='https://www.social_events.com/'
-    MEDIA_ROOT='/var/www/static/staging/{}/media'.format(SERVER_APP_FOLDER_NAME)
+    WEB_APP_URL='https://www.social-events.com/'
 
 
-if ENVIRONMENT == 'staging':
+if ENVT == 'staging':
     env=STAGING
-elif ENVIRONMENT == 'master':
+elif ENVT == 'master':
     env=MASTER
 else:
     env=LOCAL

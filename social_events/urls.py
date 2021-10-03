@@ -49,7 +49,9 @@ from event.views import (
     EventPictureViewSet,
     EventAgendaViewSet,
     ExpositorViewSet,
-    EventUserRegistrationViewSet
+    EventUserRegistrationViewSet,
+    UserCheckIn,
+    RetrieveBadge
 )
 
 router=routers.DefaultRouter()
@@ -100,6 +102,8 @@ urlpatterns=[
     url(r'^v1/activate-user', ActivateUser.as_view(), name='login'),
     path('tinymce/', include('tinymce.urls')),
     path('v1/system/info', System.as_view()),
+    path('v1/user-check-in', UserCheckIn.as_view()),
+    path('v1/retrieve-badge', RetrieveBadge.as_view()),
     url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),

@@ -16,12 +16,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://bitbucket.org:Yudhs/nedii-api.git"
+    "url": "git@github.com:GMR027/social-events-platform-api.git"
   },
   "keywords": [
     "Nedii"
   ],
-  "author": "Christopher Irak Guzman Monsalvo",
+  "author": "Edgar & Christopher Guzman",
   "license": "Copyright",
-  "homepage": "https://bitbucket.org/Yudhs/nedii-api#readme"
+  "homepage": "https://github.com/GMR027/social-events-platform-api"
 }

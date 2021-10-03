@@ -1,4 +1,4 @@
-from django.contrib.gis.db import models
+from django.db import models
 from common.models import MediumPicture
 from common.tools import set_media_url, get_unique_slug
 

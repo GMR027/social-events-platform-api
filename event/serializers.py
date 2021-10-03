@@ -1,5 +1,7 @@
 from rest_framework_json_api.serializers import HyperlinkedModelSerializer
 from rest_framework_json_api.relations import ResourceRelatedField
+from django.conf import settings
+from django.core.mail import EmailMultiAlternatives
 from event.models import (
     EventClassification,
     Event,
@@ -79,3 +81,32 @@ class EventUserRegistrationSerializer(HyperlinkedModelSerializer):
     class Meta:
         model=EventUserRegistration
         fields="__all__"
+    
+    def create(self, validated_data):
+        user = EventUserRegistration()
+        for i in validated_data:
+            print(i, validated_data[i])
+            setattr(user, i, validated_data[i])
+        subject = 'Registro exitoso al evento'
+        from_email = settings.EMAIL_HOST_USER
+        to = user.email
+        text_content = 'Click'
+        html_content = '''
+                <h2>{0}, usted se ha registrado exitosamente al evento!</h2>
+                <p>
+                    Si necesita acceder a su codigo QR, por favor de click en el
+                    siquiente enlace en cualquier momento:
+                    <a href="{1}gafete/{2}">Click Aqui.</a>
+                </p>
+                <span>Gracias!</span>
+                <br/>
+            '''.format(
+                user.first_name,
+                settings.WEB_APP_URL,
+                user.identifier
+            )
+        msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+        msg.attach_alternative(html_content, "text/html")
+        msg.send()
+        user.save()
+        return user

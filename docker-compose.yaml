@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:14.0-alpine
+    volumes:
+      - /db-test:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=social_events
+      - POSTGRES_USER=social_events
+      - POSTGRES_PASSWORD=social_events
+  web:
+    image: longmont.iguzman.com.mx:5000/social-events:1.0
+    environment:
+      - SECRET_KEY=SECRET_KEY
+      - ENVT=staging
+      - DB_NAME=social_events
+      - DB_USER=social_events
+      - DB_PASSWORD=social_events
+      - EMAIL_HOST_USER=EMAIL_HOST_USER
+      - EMAIL_HOST_PASSWORD=EMAIL_HOST_PASSWORD
+    volumes:
+      - /static-test:/static
+      - /media-test:/media
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db

@@ -1,4 +1,4 @@
-from django.contrib.gis.db import models
+from django.db import models
 from common.models import MediumPicture
 from common.tools import set_media_url
 from django_resized import ResizedImageField
@@ -31,17 +31,17 @@ class EventAgenda(MediumPicture):
     date=models.DateField(
         null=False,
         blank=False,
-        verbose_name="Fecha"
+        verbose_name="Fecha de la conferencia"
     )
     starting_time=models.TimeField(
         null=False,
         blank=False,
-        verbose_name="Inicio de exposicion"
+        verbose_name="Inicio de la conferencia"
     )
     ending_time=models.TimeField(
         null=False,
         blank=False,
-        verbose_name="Inicio de exposicion"
+        verbose_name="Fin de la conferencia"
     )
     location=models.CharField (
         max_length=32,
@@ -52,10 +52,10 @@ class EventAgenda(MediumPicture):
         verbose_name="Mapa",
         null=True,
         blank=True,
-        size=[512, 512],
+        size=[1920, 1080],
         quality=90,
         upload_to=event_pictures,
-        help_text="Mapa de la exposicion"
+        help_text="Mapa de la conferencia"
     )
     video_live_link=models.URLField(
         verbose_name="Link del video en vivo",
@@ -65,9 +65,9 @@ class EventAgenda(MediumPicture):
     pictures=models.ManyToManyField(
         "event.EventPicture",
         related_name="event_agenda_pictures",
-        verbose_name="Fotos de la exposicion",
+        verbose_name="Fotos de la conferencia",
         blank=True,
-        help_text="Fotos de la exposicion"
+        help_text="Fotos de la conferencia"
     )
 
     def __str__(self):
@@ -77,8 +77,8 @@ class EventAgenda(MediumPicture):
         )
 
     class Meta:
-        verbose_name="Agenda"
-        verbose_name_plural="Agenda"
+        verbose_name="Conferencia"
+        verbose_name_plural="Conferencias"
 
     class JSONAPIMeta:
         resource_name="EventAgenda"
