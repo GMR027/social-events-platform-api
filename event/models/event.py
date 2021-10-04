@@ -51,7 +51,7 @@ class Event(MediumPicture):
         verbose_name="Imágen Cover",
         null=True,
         blank=True,
-        size=[512, 512],
+        size=[1920, 1080],
         quality=90,
         upload_to=event_pictures,
         help_text="Imágen Cover del evento"
