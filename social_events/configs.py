@@ -70,14 +70,14 @@ class LOCAL(Common):
 
 
 class STAGING(Common):
-    WEB_APP_URL='https://staging.social-events.com/'
+    WEB_APP_URL='https://social-events.iguzman.com.mx/'
 
 
 class MASTER(Common):
     DEBUG=False
     JWT_ACCESS_EXPIRATION_MINUTES=15
     JWT_REFRESH_EXPIRATION_MINUTES=30
-    WEB_APP_URL='https://www.social-events.com/'
+    WEB_APP_URL='https://social-events.iguzman.com.mx/'
 
 
 if ENVT == 'staging':
