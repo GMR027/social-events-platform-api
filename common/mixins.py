@@ -10,13 +10,10 @@ class CustomCreate(mixins.CreateModelMixin):
     Create a model instance.
     """
     def create(self, request, *args, **kwargs):
-        print('>>>>>> 1')
         userId = request.user.id
-        print('>>>>>> 2')
         token = None
         if 'Authorization' in request.headers and request.headers['Authorization'] != '':
             token = request.headers['Authorization'].split(" ")[1]
-        print('>>>>>> 3')
         if token:
             user = jwt.decode(token, settings.SECRET_KEY, algorithms='HS256', do_time_check=True)
             userId = user['user_id']
@@ -24,15 +21,10 @@ class CustomCreate(mixins.CreateModelMixin):
                 'type': 'User',
                 'id': userId
             })
-        print('>>>>>> 4')
         request = tools.save_base64_picture(request)
-        print('>>>>>> 5')
         serializer = self.get_serializer(data=request.data)
-        print('>>>>>> 6', request.data)
         serializer.is_valid(raise_exception=True)
-        print('>>>>>> 7')
         self.perform_create(serializer)
-        print('>>>>>> 8')
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 

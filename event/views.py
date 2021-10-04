@@ -96,59 +96,71 @@ class EventUserRegistrationViewSet(
     ):
     queryset=EventUserRegistration.objects.all()
     serializer_class=EventUserRegistrationSerializer
-    filter_fields=("event", "zone", "city", "check_in_complete")
+    filter_fields=("event", "zone", "city", "check_in_complete", "identifier")
     search_fields=("first_name", "last_name", "identifier", "email", "phone")
     ordering=( "id", )
 
 
-@method_decorator(csrf_exempt, name='dispatch')
+@method_decorator(csrf_exempt, name="dispatch")
 class UserCheckIn(APIView):
     def post(self, request, *args, **kwargs):
-        body_unicode=request.body.decode('utf-8')
+        body_unicode=request.body.decode("utf-8")
         body = json.loads(body_unicode)
         user = get_object_or_404(
             EventUserRegistration,
             enabled = True,
-            identifier = body['data']["attributes"]['identifier']
+            identifier=body["data"]["attributes"]["identifier"],
+            check_in_pin=body["data"]["attributes"]["pin"]
         )
         user.check_in_complete=True
         user.save()
         return Response( data = {
-            'success': True
+            "success": True
         }, status = status.HTTP_200_OK )
 
 
-@method_decorator(csrf_exempt, name='dispatch')
+@method_decorator(csrf_exempt, name="dispatch")
 class RetrieveBadge(APIView):
     def post(self, request, *args, **kwargs):
-        body_unicode=request.body.decode('utf-8')
+        body_unicode=request.body.decode("utf-8")
         body = json.loads(body_unicode)
-        print(body)
         user = get_object_or_404(
             EventUserRegistration,
             enabled=True,
-            email=body['data']["attributes"]['email']
+            email=body["data"]["attributes"]["email"],
+            event=body["data"]["attributes"]["event"]
         )
-        print(user)
-        subject = 'Gafete para evento'
+        event = get_object_or_404(
+            Event,
+            enabled=True,
+            id=body["data"]["attributes"]["event"]
+        )
+        subject = "Gafete para evento"
         from_email = settings.EMAIL_HOST_USER
         to = user.email
-        text_content = 'Click'
-        html_content = '''
-                <h2>{0}, aqui esta su gafete para el evento!</h2>
-                <p>
-                    <a href="{1}gafete/{2}">Click Aqui.</a>
-                </p>
-                <span>Gracias!</span>
-                <br/>
-            '''.format(
-                user.first_name,
-                settings.WEB_APP_URL,
-                user.identifier
-            )
+        text_content = "Aqui esta su gafete: {}badge/{}".format(
+            settings.WEB_APP_URL,
+            user.identifier
+        )
+        html_content = """
+            <img src={} />
+            <br/>
+            <h2>{}, hemos encontrado su gafete para el evento {}!</h2>
+            <p>
+                <a href="{}badge/{}">Click Aqui.</a>
+            </p><br/>
+            <span>Gracias!</span>
+            <br/>
+        """.format(
+            event.img_logo,
+            user.first_name,
+            event.title,
+            settings.WEB_APP_URL,
+            user.identifier
+        )
         msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
         msg.attach_alternative(html_content, "text/html")
         msg.send()
         return Response( data = {
-            'success': True
+            "success": True
         }, status = status.HTTP_200_OK )

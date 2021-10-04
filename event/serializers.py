@@ -78,6 +78,10 @@ class ExpositorSerializer(HyperlinkedModelSerializer):
 class EventUserRegistrationSerializer(HyperlinkedModelSerializer):
     event=ResourceRelatedField(queryset=Event.objects)
 
+    included_serializers = {
+        "event": "event.serializers.EventSerializer"
+    }
+
     class Meta:
         model=EventUserRegistration
         fields="__all__"
@@ -85,23 +89,30 @@ class EventUserRegistrationSerializer(HyperlinkedModelSerializer):
     def create(self, validated_data):
         user = EventUserRegistration()
         for i in validated_data:
-            print(i, validated_data[i])
             setattr(user, i, validated_data[i])
-        subject = 'Registro exitoso al evento'
+        event=validated_data["event"]
+        subject = "Registro exitoso al evento"
         from_email = settings.EMAIL_HOST_USER
         to = user.email
-        text_content = 'Click'
-        html_content = '''
-                <h2>{0}, usted se ha registrado exitosamente al evento!</h2>
+        text_content = "Registro exitoso al evento, aqui esta su gafete: {}badge/{}".format(
+            settings.WEB_APP_URL,
+            user.identifier
+        )
+        html_content = """
+                <img src={} />
+                <br/>
+                <h2>{}, se ha registrado exitosamente al evento {}!</h2>
                 <p>
-                    Si necesita acceder a su codigo QR, por favor de click en el
-                    siquiente enlace en cualquier momento:
-                    <a href="{1}gafete/{2}">Click Aqui.</a>
-                </p>
+                    Si necesita acceder a su gafete virtual, por favor de click en el
+                    siguiente enlace en cualquier momento:
+                    <a href="{}badge/{}">Click Aqui.</a>
+                </p><br/>
                 <span>Gracias!</span>
                 <br/>
-            '''.format(
+            """.format(
+                event.img_logo,
                 user.first_name,
+                event.title,
                 settings.WEB_APP_URL,
                 user.identifier
             )
