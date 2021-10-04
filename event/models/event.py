@@ -32,11 +32,17 @@ class Event(MediumPicture):
         blank=False,
         default=False
     )
+    check_in_pin=models.CharField (
+        verbose_name="Pin de 4 digitos para el Check in",
+        max_length=4,
+        null=False,
+        blank=False
+    )
     img_logo=ResizedImageField(
         verbose_name="Logo",
         null=True,
         blank=False,
-        size=[256, 256],
+        size=[256, 128],
         quality=100,
         upload_to=event_pictures,
         help_text="Logo del evento"
@@ -45,7 +51,7 @@ class Event(MediumPicture):
         verbose_name="Imágen Cover",
         null=True,
         blank=True,
-        size=[1920, 1080],
+        size=[512, 512],
         quality=90,
         upload_to=event_pictures,
         help_text="Imágen Cover del evento"
@@ -96,7 +102,7 @@ class Event(MediumPicture):
         verbose_name="Mapa",
         null=True,
         blank=True,
-        size=[1920, 1080],
+        size=[1920, 1920],
         quality=90,
         upload_to=event_pictures,
         help_text="Mapa del evento"
@@ -107,6 +113,15 @@ class Event(MediumPicture):
         size=[1920, 1920],
         quality=90,
         upload_to=event_pictures
+    )
+    img_badge=ResizedImageField(
+        verbose_name="Imágen para fondo del gafete",
+        null=True,
+        blank=True,
+        size=[512, 512],
+        quality=90,
+        upload_to=event_pictures,
+        help_text="Imágen para fondo del gafete"
     )
     video_live_link=models.URLField(
         verbose_name="Link del video en vivo",

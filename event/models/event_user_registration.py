@@ -57,21 +57,21 @@ class EventUserRegistration(CommonFields):
     img_user=ResizedImageField (
         null=True,
         blank=True,
-        size=[1080, 1080],
+        size=[720, 1280],
         quality=90,
         upload_to=picture
     )
     img_covid_test_result=ResizedImageField (
         null=False,
         blank=False,
-        size=[1920, 1920],
+        size=[1080, 1920],
         quality=90,
         upload_to=picture
     )
     img_signed_responsive_letter=ResizedImageField (
         null=False,
         blank=False,
-        size=[1920, 1920],
+        size=[1080, 1920],
         quality=90,
         upload_to=picture
     )
