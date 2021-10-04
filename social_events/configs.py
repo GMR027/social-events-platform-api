@@ -47,7 +47,7 @@ class Common:
             'NAME': DB_NAME,
             'USER': DB_USER,
             'PASSWORD': DB_PASSWORD,
-            'HOST': 'db',
+            'HOST': 'social-events-db',
             'PORT': '5432'
         }
     }
