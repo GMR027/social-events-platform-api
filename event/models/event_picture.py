@@ -1,5 +1,5 @@
 from django.db import models
-from common.models import MediumPicture
+from common.models import RegularPicture
 from common.tools import set_media_url
 
 # Create your models here.
@@ -7,7 +7,7 @@ from common.tools import set_media_url
 def event_pictures(instance, filename):
     return set_media_url("events/", filename)
 
-class EventPicture(MediumPicture):
+class EventPicture(RegularPicture):
     event = models.ForeignKey(
         "event.Event",
         verbose_name="Evento",
