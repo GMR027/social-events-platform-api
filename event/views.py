@@ -143,7 +143,7 @@ class RetrieveBadge(APIView):
             user.identifier
         )
         html_content = """
-            <img src={}{} />
+            <img src={}media/{} />
             <br/>
             <h2>{}, hemos encontrado su gafete para el evento {}!</h2>
             <p>
