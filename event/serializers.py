@@ -99,7 +99,7 @@ class EventUserRegistrationSerializer(HyperlinkedModelSerializer):
             user.identifier
         )
         html_content = """
-                <img src={}{} />
+                <img src={}media/{} />
                 <br/>
                 <h2>{}, se ha registrado exitosamente al evento {}!</h2>
                 <p>
@@ -115,7 +115,7 @@ class EventUserRegistrationSerializer(HyperlinkedModelSerializer):
                 user.first_name,
                 event.title,
                 settings.WEB_APP_URL,
-                user.identifier
+                user.identifier,
             )
         msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
         msg.attach_alternative(html_content, "text/html")

@@ -69,8 +69,9 @@ def save_base64_picture(request):
     except:
         pass
     for i in request.data:
-        if len(re.findall(r'img',i)) > 0:
+        if len(re.findall(r'img',i)) > 0 and request.data[i] is not None:
             picture = base64_to_file( request.data[i], 'events' ) # Fix!!!!
+            print(settings.BASE_DIR, settings.MEDIA_ROOT + '/' + picture)
             path = os.path.join(settings.BASE_DIR, settings.MEDIA_ROOT + '/' + picture)
             picture = open(path, 'rb')
             request.data[i] = File(picture)
