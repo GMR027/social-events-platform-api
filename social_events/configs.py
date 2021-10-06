@@ -56,6 +56,7 @@ class Common:
     ENVT=ENVT
     MEDIA_ROOT='/media'
     STATIC_ROOT='/static'
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 class LOCAL(Common):
     DATABASES = {
@@ -67,6 +68,7 @@ class LOCAL(Common):
     WEB_APP_URL='http://127.0.0.1:3000/'
     MEDIA_ROOT=os.path.join(BASE_DIR, 'media')
     STATIC_ROOT = os.path.join(BASE_DIR, "static")
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'http')
 
 
 class STAGING(Common):
