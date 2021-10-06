@@ -66,6 +66,7 @@ class LOCAL(Common):
         }
     }
     WEB_APP_URL='http://127.0.0.1:3000/'
+    API_URL='http://127.0.0.1:8000/'
     MEDIA_ROOT=os.path.join(BASE_DIR, 'media')
     STATIC_ROOT = os.path.join(BASE_DIR, "static")
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'http')
@@ -73,6 +74,7 @@ class LOCAL(Common):
 
 class STAGING(Common):
     WEB_APP_URL='https://social-events.iguzman.com.mx/'
+    API_URL='https://api.social-events.iguzman.com.mx/'
 
 
 class MASTER(Common):
@@ -80,6 +82,7 @@ class MASTER(Common):
     JWT_ACCESS_EXPIRATION_MINUTES=15
     JWT_REFRESH_EXPIRATION_MINUTES=30
     WEB_APP_URL='https://social-events.iguzman.com.mx/'
+    API_URL='https://api.social-events.iguzman.com.mx/'
 
 
 if ENVT == 'staging':
