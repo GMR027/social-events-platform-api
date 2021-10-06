@@ -92,14 +92,14 @@ class EventUserRegistrationSerializer(HyperlinkedModelSerializer):
             setattr(user, i, validated_data[i])
         event=validated_data["event"]
         subject = "Registro exitoso al evento"
-        from_email = settings.EMAIL_HOST_USER
+        from_email = "Long Event"
         to = user.email
         text_content = "Registro exitoso al evento, aqui esta su gafete: {}badge/{}".format(
             settings.WEB_APP_URL,
             user.identifier
         )
         html_content = """
-                <img src={} />
+                <img src={}{} />
                 <br/>
                 <h2>{}, se ha registrado exitosamente al evento {}!</h2>
                 <p>
@@ -110,6 +110,7 @@ class EventUserRegistrationSerializer(HyperlinkedModelSerializer):
                 <span>Gracias!</span>
                 <br/>
             """.format(
+                settings.API_URL,
                 event.img_logo,
                 user.first_name,
                 event.title,
