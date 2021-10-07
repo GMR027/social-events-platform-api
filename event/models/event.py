@@ -38,6 +38,12 @@ class Event(MediumPicture):
         null=False,
         blank=False
     )
+    code=models.CharField (
+        verbose_name="Codigo del evento de 4 digitos",
+        max_length=4,
+        null=True,
+        blank=True
+    )
     img_logo=ResizedImageField(
         verbose_name="Logo",
         null=True,
