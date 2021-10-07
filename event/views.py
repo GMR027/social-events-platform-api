@@ -151,7 +151,7 @@ class RetrieveBadge(APIView):
             <br/>
             <h2>{}, hemos encontrado su gafete para el evento {}!</h2>
             <p>
-                <a href="{}badge/{}/check-in">Click Aqui.</a>
+                <a href="{}badge/{}">Click Aqui.</a>
             </p><br/>
             <span>Gracias!</span>
             <br/>
