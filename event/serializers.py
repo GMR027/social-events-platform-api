@@ -105,7 +105,7 @@ class EventUserRegistrationSerializer(HyperlinkedModelSerializer):
                 <p>
                     Si necesita acceder a su gafete virtual, por favor de click en el
                     siguiente enlace en cualquier momento:
-                    <a href="{}badge/{}">Click Aqui.</a>
+                    <a href="{}badge/{}/check-in">Click Aqui.</a>
                 </p><br/>
                 <span>Gracias!</span>
                 <br/>

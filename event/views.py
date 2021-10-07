@@ -106,11 +106,15 @@ class UserCheckIn(APIView):
     def post(self, request, *args, **kwargs):
         body_unicode=request.body.decode("utf-8")
         body = json.loads(body_unicode)
+        get_object_or_404(
+            Event,
+            enabled=True,
+            check_in_pin=body["data"]["attributes"]["pin"]
+        )
         user = get_object_or_404(
             EventUserRegistration,
             enabled = True,
-            identifier=body["data"]["attributes"]["identifier"],
-            check_in_pin=body["data"]["attributes"]["pin"]
+            identifier=body["data"]["attributes"]["identifier"]
         )
         user.check_in_complete=True
         user.save()
@@ -147,7 +151,7 @@ class RetrieveBadge(APIView):
             <br/>
             <h2>{}, hemos encontrado su gafete para el evento {}!</h2>
             <p>
-                <a href="{}badge/{}">Click Aqui.</a>
+                <a href="{}badge/{}/check-in">Click Aqui.</a>
             </p><br/>
             <span>Gracias!</span>
             <br/>
