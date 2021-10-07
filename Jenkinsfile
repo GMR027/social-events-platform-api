@@ -24,6 +24,9 @@ pipeline {
 
                 sh "sudo mkdir /$APP_FOLDER/$ENVT/db -p"
                 sh "sudo chmod -R 777 /$APP_FOLDER/$ENVT/db"
+
+                sh "sudo mkdir /config/$APP_FOLDER/$ENVT -p"
+                sh "sudo chmod -R 777 /config/$APP_FOLDER/$ENVT"
             }
         }
         stage("Build & push docker image") {
@@ -35,12 +38,12 @@ pipeline {
         }
         stage("Stop current instance") {
             steps {
-                sh "sudo docker-compose --env-file /$APP_FOLDER/$ENVT/env -f docker-compose.yaml down"
+                sh "sudo docker-compose --env-file /config/$APP_FOLDER/$ENVT/env -f docker-compose.yaml down"
             }
         }
         stage("Start instance") {
             steps {
-                sh "sudo docker-compose --env-file /$APP_FOLDER/$ENVT/env -f docker-compose.yaml up -d"
+                sh "sudo docker-compose --env-file /config/$APP_FOLDER/$ENVT/env -f docker-compose.yaml up -d"
             }
         }
     }
