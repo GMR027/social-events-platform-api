@@ -44,7 +44,6 @@ pipeline {
             steps {
                 sh "sudo docker-compose --env-file /config/$APP_FOLDER/$ENVT/env -f docker-compose.yaml down"
                 sh "sudo docker-compose --env-file /config/$APP_FOLDER/$ENVT/env -f docker-compose.yaml up -d"
-                sh "sudo rm /config/$APP_FOLDER/$ENVT/env"
             }
         }
     }
