@@ -4,3 +4,4 @@ from .event import Event
 from .expositor import Expositor
 from .event_agenda import EventAgenda
 from .event_user_registration import EventUserRegistration
+from .event_zones import Zone

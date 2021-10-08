@@ -21,7 +21,8 @@ from event.models import (
     EventPicture,
     Expositor,
     EventAgenda,
-    EventUserRegistration
+    EventUserRegistration,
+    Zone
 )
 from event.serializers import (
     EventClassificationSerializer,
@@ -29,7 +30,8 @@ from event.serializers import (
     EventAgendaSerializer,
     EventPictureSerializer,
     EventUserRegistrationSerializer,
-    ExpositorSerializer
+    ExpositorSerializer,
+    ZoneSerializer
 )
 
 # Create your views here.
@@ -83,6 +85,14 @@ class EventAgendaViewSet(ModelViewSet):
     serializer_class=EventAgendaSerializer
     filter_fields=("enabled", "event", "date")
     search_fields=("title", "description")
+    ordering=( "id", )
+
+
+class EventZoneViewSet(ModelViewSet):
+    queryset=Zone.objects.all()
+    serializer_class=ZoneSerializer
+    filter_fields=("enabled", "event")
+    search_fields=("zone",)
     ordering=( "id", )
 
 
@@ -140,7 +150,7 @@ class RetrieveBadge(APIView):
             id=body["data"]["attributes"]["event"]
         )
         subject = "Gafete para evento"
-        from_email = settings.EMAIL_HOST_USER
+        from_email = "Evtfy"
         to = user.email
         text_content = "Aqui esta su gafete: {}badge/{}".format(
             settings.WEB_APP_URL,

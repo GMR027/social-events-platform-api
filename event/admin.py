@@ -5,7 +5,8 @@ from event.models import (
     EventPicture,
     Expositor,
     EventAgenda,
-    EventUserRegistration
+    EventUserRegistration,
+    Zone
 )
 
 # Register your models here.
@@ -117,3 +118,18 @@ class EventUserRegistrationAdmin(admin.ModelAdmin):
     )
 
 admin.site.register(EventUserRegistration, EventUserRegistrationAdmin)
+
+
+class ZoneAdmin(admin.ModelAdmin):
+    list_display=[
+        "zone",
+        "event"
+    ]
+    search_fields=("zone",)
+    list_filter=("enabled", "event")
+    readonly_fields=(
+        "order",
+        "version"
+    )
+
+admin.site.register(Zone, ZoneAdmin)
