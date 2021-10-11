@@ -1,5 +1,6 @@
 from django.db import models
 from common.models import MediumPicture
+from tinymce.models import HTMLField
 from common.tools import set_media_url, get_unique_slug
 from django_resized import ResizedImageField
 
@@ -80,6 +81,7 @@ class Event(MediumPicture):
         verbose_name="Fecha de fin del evento"
     )
     city=models.CharField (
+        verbose_name="Ciudad",
         max_length=32,
         null=False,
         blank=False
@@ -104,6 +106,13 @@ class Event(MediumPicture):
         blank=True,
         help_text="Exposiciones del evento"
     )
+    zones=models.ManyToManyField(
+        "event.Zone",
+        related_name="event_zones",
+        verbose_name="Zonas",
+        blank=True,
+        help_text="Zonas"
+    )
     map=ResizedImageField(
         verbose_name="Mapa",
         null=True,
@@ -119,6 +128,48 @@ class Event(MediumPicture):
         size=[1920, 1920],
         quality=90,
         upload_to=event_pictures
+    )
+    img_dress_code=ResizedImageField(
+        verbose_name="Imágen del codigo de vestimenta",
+        null=True,
+        blank=True,
+        size=[1920, 1080],
+        quality=90,
+        upload_to=event_pictures,
+        help_text="Imágen del codigo de vestimenta"
+    )
+    dress_code=HTMLField (
+        null=True,
+        blank=True,
+        default="Codigo de vestimenta"
+    )
+    img_travel_allowance=ResizedImageField(
+        verbose_name="Imágen de informacion de viaticos",
+        null=True,
+        blank=True,
+        size=[1920, 1080],
+        quality=90,
+        upload_to=event_pictures,
+        help_text="Imágen de informacion de viaticos"
+    )
+    travel_allowance=HTMLField (
+        null=True,
+        blank=True,
+        default="Informacion de viaticos"
+    )
+    img_rules=ResizedImageField(
+        verbose_name="Imágen de las reglas / normas",
+        null=True,
+        blank=True,
+        size=[1920, 1080],
+        quality=90,
+        upload_to=event_pictures,
+        help_text="Imágen de las reglas / normas"
+    )
+    rules=HTMLField (
+        null=True,
+        blank=True,
+        default="Reglas / Normas"
     )
     img_badge=ResizedImageField(
         verbose_name="Imágen para fondo del gafete",

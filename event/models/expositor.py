@@ -14,6 +14,12 @@ class Expositor(MediumPicture):
         null=False,
         blank=False
     )
+    hidden=models.BooleanField (
+        verbose_name="Ocultar expositor",
+        blank=False,
+        default=False,
+        help_text="Define si la/el expositor(a) sera visible o no"
+    )
     short_description=models.CharField(
         verbose_name="Descripción corta del expositor",
         max_length=90,

@@ -8,7 +8,8 @@ from event.models import (
     EventPicture,
     Expositor,
     EventAgenda,
-    EventUserRegistration
+    EventUserRegistration,
+    Zone
 )
 
 class EventClassificationSerializer(HyperlinkedModelSerializer):
@@ -29,11 +30,16 @@ class EventSerializer(HyperlinkedModelSerializer):
         queryset=EventAgenda.objects,
         many=True
     )
+    zones=ResourceRelatedField(
+        queryset=Zone.objects,
+        many=True
+    )
 
     included_serializers = {
         "classification": "event.serializers.EventClassificationSerializer",
         "pictures": "event.serializers.EventPictureSerializer",
         "agenda_items": "event.serializers.EventAgendaSerializer",
+        "zones": "event.serializers.ZoneSerializer",
     }
 
     class Meta:
@@ -75,6 +81,18 @@ class ExpositorSerializer(HyperlinkedModelSerializer):
         fields="__all__"
 
 
+class ZoneSerializer(HyperlinkedModelSerializer):
+    event=ResourceRelatedField(queryset=Event.objects)
+
+    included_serializers = {
+        "event": "event.serializers.EventSerializer"
+    }
+
+    class Meta:
+        model=Zone
+        fields="__all__"
+
+
 class EventUserRegistrationSerializer(HyperlinkedModelSerializer):
     event=ResourceRelatedField(queryset=Event.objects)
 
@@ -91,8 +109,10 @@ class EventUserRegistrationSerializer(HyperlinkedModelSerializer):
         for i in validated_data:
             setattr(user, i, validated_data[i])
         event=validated_data["event"]
-        subject = "Registro exitoso al evento"
-        from_email = "Long Event"
+        subject = "Registro exitoso al evento {}".format(
+            event.title
+        )
+        from_email = "Evtfy"
         to = user.email
         text_content = "Registro exitoso al evento, aqui esta su gafete: {}badge/{}".format(
             settings.WEB_APP_URL,

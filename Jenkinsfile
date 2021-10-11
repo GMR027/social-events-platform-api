@@ -35,7 +35,7 @@ pipeline {
                 expression { BUILD_DOCKER_IMAGE == "yes" }
             }
             steps {
-                sh "sudo docker build -t $APP_FOLDER ."
+                sh "sudo docker build --memory 300m -t $APP_FOLDER ."
                 sh "sudo docker tag $APP_FOLDER longmont.iguzman.com.mx:5000/$APP_FOLDER:1.0"
                 sh "sudo docker push longmont.iguzman.com.mx:5000/$APP_FOLDER:1.0"
             }

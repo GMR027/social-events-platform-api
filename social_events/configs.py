@@ -73,8 +73,8 @@ class LOCAL(Common):
 
 
 class STAGING(Common):
-    WEB_APP_URL='https://social-events.iguzman.com.mx/'
-    API_URL='https://api.social-events.iguzman.com.mx/'
+    WEB_APP_URL='https://www.evtfy.com/'
+    API_URL='https://api.evtfy.com/'
 
 
 class MASTER(Common):
@@ -82,7 +82,7 @@ class MASTER(Common):
     JWT_ACCESS_EXPIRATION_MINUTES=15
     JWT_REFRESH_EXPIRATION_MINUTES=30
     WEB_APP_URL='https://www.evtfy.com/'
-    API_URL='https://api.evtfy.com'
+    API_URL='https://api.evtfy.com/'
 
 
 if ENVT == 'staging':

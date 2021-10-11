@@ -49,6 +49,7 @@ from event.views import (
     EventPictureViewSet,
     EventAgendaViewSet,
     ExpositorViewSet,
+    EventZoneViewSet,
     EventUserRegistrationViewSet,
     UserCheckIn,
     RetrieveBadge
@@ -71,6 +72,7 @@ router.register(r'event-classifications', EventClassificationViewSet)
 router.register(r'events', EventViewSet)
 router.register(r'event-pictures', EventPictureViewSet)
 router.register(r'event-agenda', EventAgendaViewSet)
+router.register(r'event-zones', EventZoneViewSet)
 router.register(r'expositors', ExpositorViewSet)
 router.register(r'user-registrations', EventUserRegistrationViewSet)
 
