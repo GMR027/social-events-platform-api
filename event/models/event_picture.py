@@ -24,9 +24,7 @@ class EventPicture(RegularPicture):
 
     def save(self, *args, **kwargs):
         if not self.title:
-            self.title="{} - image".format(
-                self.event.title
-            )
+            self.title="image"
 
         super().save(*args, **kwargs)
 
