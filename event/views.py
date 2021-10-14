@@ -106,7 +106,7 @@ class EventUserRegistrationViewSet(
     ):
     queryset=EventUserRegistration.objects.all()
     serializer_class=EventUserRegistrationSerializer
-    filter_fields=("event", "zone", "city", "check_in_complete", "identifier")
+    filter_fields=("event", "zone", "city", "check_in_complete", "identifier", "email")
     search_fields=("first_name", "last_name", "identifier", "email", "phone")
     ordering=( "id", )
 
