@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.http import HttpResponse
+import csv
 from event.models import (
     EventClassification,
     Event,
@@ -10,6 +12,21 @@ from event.models import (
 )
 
 # Register your models here.
+
+# EXPORT AS CSV
+class ExportCsvMixin:
+    def export_as_csv(self, request, queryset):
+        meta = self.model._meta
+        field_names = [field.name for field in meta.fields]
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        writer = csv.writer(response)
+        writer.writerow(field_names)
+        for obj in queryset:
+            row = writer.writerow([getattr(obj, field) for field in field_names])
+        return response
+     
+    export_as_csv.short_description = "Exportar seleccionados a Excel"
 
 class EventClassificationAdmin(admin.ModelAdmin):
     list_display=[
@@ -100,7 +117,8 @@ class EventAgendaAdmin(admin.ModelAdmin):
 admin.site.register(EventAgenda, EventAgendaAdmin)
 
 
-class EventUserRegistrationAdmin(admin.ModelAdmin):
+class EventUserRegistrationAdmin(admin.ModelAdmin, ExportCsvMixin):
+    actions = ["export_as_csv"]
     list_display=[
         "first_name",
         "last_name",
